@@ -22,7 +22,7 @@ const firebaseConfig = {
   measurementId: "G-S7F0R26Q1R",
 };
 
-const firebaseapp = initializeApp(firebaseConfig);
+export const firebaseapp = initializeApp(firebaseConfig);
 const googleProvider = new GoogleAuthProvider();
 googleProvider.setCustomParameters({
   prompt: "select_account",
@@ -41,9 +41,9 @@ export const createUserDocFromAuth = async (
 ) => {
   if (!userAuth) return;
   const userDoc = doc(db, "users", userAuth.uid);
-  console.log(userDoc);
+  // console.log(userDoc);
   const userSnapshot = await getDoc(userDoc);
-  console.log(userSnapshot);
+  // console.log(userSnapshot);
 
   if (!userSnapshot.exists()) {
     const { displayName, email } = userAuth;

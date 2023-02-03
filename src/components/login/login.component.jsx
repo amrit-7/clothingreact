@@ -1,5 +1,6 @@
 import { useContext, useState } from "react";
 import { Button, Form, Row } from "react-bootstrap";
+import { useNavigate } from "react-router";
 import { UserContext } from "../../contexts/userContext";
 import { loginAuthUserWithEmailAndPassword } from "../../utils/firebase/firebase.utils";
 
@@ -10,6 +11,7 @@ const defaultFormFields = {
 };
 
 const Login = () => {
+  const navigate = useNavigate();
   const { setCurrentUser } = useContext(UserContext);
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { email, password } = formFields;
@@ -28,6 +30,7 @@ const Login = () => {
       const user = await loginAuthUserWithEmailAndPassword(email, password);
       setCurrentUser(user);
       resetFormFields();
+      navigate("/");
     } catch (error) {
       switch (error.code) {
         case "auth/wrong-password":

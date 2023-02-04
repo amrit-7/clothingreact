@@ -10,7 +10,7 @@ import SignIn from "./components/routes/sign-in/sign-in.component.jsx";
 import Shop from "./components/routes/shop/shop.component.jsx";
 import CheckOut from "./components/routes/checkout/checkout.component.jsx";
 import { useEffect } from "react";
-import { setCurrentUser } from "./store/action/action.jsx";
+import { setCurrentUser } from "./store/action/action.js";
 const App = () => {
   const dispatch = useDispatch();
 

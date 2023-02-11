@@ -25,4 +25,6 @@ export const store = configureStore({
   ].filter(Boolean),
   devTools: true,
 });
+
+sagaMiddelware.run(rootSaga);
 export const persistor = persistStore(store);

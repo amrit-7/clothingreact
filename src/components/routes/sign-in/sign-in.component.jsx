@@ -1,13 +1,16 @@
 import { useState } from "react";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
-import {
-  signInWithGooglePopup,
-  createUserDocFromAuth,
-  createAuthUserWithEmailAndPassword,
-} from "../../../utils/firebase/firebase.utils";
+// import {
+//   signInWithGooglePopup,
+//   createUserDocFromAuth,
+//   createAuthUserWithEmailAndPassword,
+// } from "../../../utils/firebase/firebase.utils";
+import { useDispatch } from "react-redux";
+import { signUpStart } from "../../../store/action/action";
 import Login from "../../login/login.component";
 import { useContext } from "react";
 import { UserContext } from "../../../contexts/userContext";
+import { googleSignInStart } from "../../../store/action/action";
 
 const defaultFormFields = {
   displayName: "",
@@ -17,7 +20,7 @@ const defaultFormFields = {
 
 const SignIn = () => {
   const setCurrentUser = useContext(UserContext);
-
+  const dispatch = useDispatch();
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { displayName, email, password } = formFields;
   // console.log(formFields);
@@ -26,9 +29,7 @@ const SignIn = () => {
   };
 
   const logGoogleUser = async () => {
-    const { user } = await signInWithGooglePopup();
-    const userDoc = await createUserDocFromAuth(user);
-    // console.log(userDoc);
+    dispatch(googleSignInStart());
   };
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -38,11 +39,7 @@ const SignIn = () => {
     e.preventDefault();
 
     try {
-      const { user } = await createAuthUserWithEmailAndPassword(
-        email,
-        password
-      );
-      await createUserDocFromAuth(user, { displayName });
+      const user = dispatch(signUpStart(email, password, displayName));
       resetFormFields();
       setCurrentUser(user);
       alert("Sign In Successfull");
@@ -113,4 +110,3 @@ const SignIn = () => {
   );
 };
 export default SignIn;
-  

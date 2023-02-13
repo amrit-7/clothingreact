@@ -1,5 +1,5 @@
 import { Outlet } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { selectCartIsOpen } from "../../../store/cart/cart.selector";
 import CartIcon from "../../cart-icon/cart-icon.component";
 import { Fragment } from "react";
@@ -12,16 +12,15 @@ import {
   NavLinksContainer,
   NavLink,
 } from "./navigation.styles.jsx";
-import { signOutUser } from "../../../utils/firebase/firebase.utils";
+import { signOutStart } from "../../../store/action/action";
 import CartDropdown from "../../cart-dropdown/cart-dropdown.component";
 
 const Navbar = () => {
   const currentUser = useSelector(selectCurrentUser);
   const isCartOpen = useSelector(selectCartIsOpen);
+  const dispatch = useDispatch();
 
-  const signOutHandler = async () => {
-    await signOutUser();
-  };
+  const signOutHandler = () => dispatch(signOutStart());
   return (
     <Fragment>
       <NavbarComponent>

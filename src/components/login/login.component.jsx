@@ -1,9 +1,9 @@
 import { useContext, useState } from "react";
 import { Button, Form, Row } from "react-bootstrap";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
 import { UserContext } from "../../contexts/userContext";
-import { loginAuthUserWithEmailAndPassword } from "../../utils/firebase/firebase.utils";
-
+import { emailSignInStart } from "../../store/action/action";
 const defaultFormFields = {
   displayName: "",
   email: "",
@@ -11,11 +11,12 @@ const defaultFormFields = {
 };
 
 const Login = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const { setCurrentUser } = useContext(UserContext);
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { email, password } = formFields;
-  // console.log(formFields);
+
   const resetFormFields = () => {
     setFormFields(defaultFormFields);
   };
@@ -25,9 +26,8 @@ const Login = () => {
   };
   const handleSumbit = async (e) => {
     e.preventDefault();
-
     try {
-      const user = await loginAuthUserWithEmailAndPassword(email, password);
+      const user = dispatch(emailSignInStart(email, password));
       setCurrentUser(user);
       resetFormFields();
       navigate("/");

@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import { selectCartItems } from "../../store/cart/cart.selector";
-import { Button } from "react-bootstrap";
+import Button from "../button/button.component";
 import CartItem from "../cart-item/cart-item.component";
 import { useNavigate } from "react-router";
 import {
